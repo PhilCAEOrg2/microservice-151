@@ -120,8 +120,10 @@ public class ResTest {
       c.setLogin(AnonymousAgentImpl.IDENTIFIER, "");
       ClientResponse result = c.sendRequest("GET", mainPath + "/test", """
 """);
-    
-      Assert.assertEquals("[826933]", 200, result.getHttpCode());
+      Object response = JSONValue.parse(result.getResponse().trim());
+      // Response body has type JSON Array
+      assertThat("[44059]", response, isA(JSONArray.class));
+      
 
       System.out.println("Result of 'test$HTTP_Method_Name$': " + result.getResponse().trim());
     } catch (Exception e) {
